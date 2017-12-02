@@ -27,6 +27,9 @@ import com.koushikdutta.ion.Ion;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+
+import id.zelory.compressor.Compressor;
 
 public class ReportingActivity extends AppCompatActivity {
 
@@ -80,7 +83,12 @@ public class ReportingActivity extends AppCompatActivity {
         btnup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                upload();
+                try {
+                    upload();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(ReportingActivity.this,"Try Again", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -136,12 +144,13 @@ public class ReportingActivity extends AppCompatActivity {
     }
 
 
-    private void upload() {
+    private void upload() throws IOException {
         // Image location URL
         progressBar.setVisibility(View.VISIBLE);
         btnup.setBackgroundColor(getResources().getColor(R.color.grey));
         btnup.setEnabled(false);
 
+        File compressedImageFile = new Compressor(this).compressToFile(new File(picturePath));
 
 //        Log.e("path", "----------------" + picturePath);
 //
@@ -170,7 +179,7 @@ public class ReportingActivity extends AppCompatActivity {
                 .setMultipartParameter("lat",lat+"")
                 .setMultipartParameter("lng",lng+"")
                 .setMultipartParameter("description",des.getText().toString())
-                .setMultipartFile("image","application/image",new File(picturePath))
+                .setMultipartFile("image","application/image", compressedImageFile)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override

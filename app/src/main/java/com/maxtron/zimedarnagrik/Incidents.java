@@ -12,14 +12,16 @@ public class Incidents implements Parcelable {
     public String distance;
     public String imageurl;
     public String timestamp;
+    public String reported;
     int id;
 
-    public Incidents(String description, String imageurl, String distance, String timestamp, int id){
+    public Incidents(String description, String imageurl, String distance, String timestamp, int id, String reported){
         this.description = description;
         this.imageurl = imageurl;
         this.distance = distance;
         this.timestamp = timestamp;
         this.id = id;
+        this.reported = reported;
     }
 
     protected Incidents(Parcel in) {
@@ -28,6 +30,7 @@ public class Incidents implements Parcelable {
         imageurl = in.readString();
         timestamp = in.readString();
         id = in.readInt();
+        reported = in.readString();
     }
 
     public static final Creator<Incidents> CREATOR = new Creator<Incidents>() {
@@ -54,5 +57,6 @@ public class Incidents implements Parcelable {
         parcel.writeString(imageurl);
         parcel.writeString(timestamp);
         parcel.writeInt(id);
+        parcel.writeString(reported);
     }
 }

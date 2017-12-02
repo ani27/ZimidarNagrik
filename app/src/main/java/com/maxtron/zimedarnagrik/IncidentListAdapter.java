@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.koushikdutta.ion.Ion;
 
@@ -47,13 +48,19 @@ public class IncidentListAdapter extends RecyclerView.Adapter<IncidentListAdapte
                 .error(R.drawable.overturnedcar2)
                 .load(incident.imageurl);
 
+
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, SingleVerificationActivity.class);
-                intent.putExtra("incident", incident);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+
+                if (incident.reported.equals("True")) {
+                    Toast.makeText(context, "This incident has been already reported. Thank you", Toast.LENGTH_LONG).show();
+                }else{
+                    Intent intent = new Intent(context, SingleVerificationActivity.class);
+                    intent.putExtra("incident", incident);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
             }
         });
 

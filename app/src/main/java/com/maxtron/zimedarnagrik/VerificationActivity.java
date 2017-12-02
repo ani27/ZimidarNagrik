@@ -73,6 +73,7 @@ public class VerificationActivity extends AppCompatActivity {
                                     JsonObject jsonObject = result.get(i).getAsJsonObject();
                                     String description = jsonObject.get("description").getAsString();
                                     String timestamp = jsonObject.get("timestamp").getAsString();
+                                    String reported = jsonObject.get("reported").getAsString();
                                     double lat_inc = jsonObject.get("lat").getAsDouble();
                                     double lng_inc = jsonObject.get("lng").getAsDouble();
                                     int id = jsonObject.get("id").getAsInt();
@@ -89,7 +90,7 @@ public class VerificationActivity extends AppCompatActivity {
 //                                    cal.setTimeInMillis(time);
 //                                    String date = DateFormat.format("dd-MM-yyyy", cal).toString();
 
-                                    Incidents incidents = new Incidents(description, url, String.format("%.2f", d), timestamp, id);
+                                    Incidents incidents = new Incidents(description, url, String.format("%.2f", d), timestamp, id,reported);
                                     incidentsArrayList.add(incidents);
 
                                 }
