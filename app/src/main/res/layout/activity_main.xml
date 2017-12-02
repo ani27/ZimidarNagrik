@@ -17,4 +17,20 @@
         android:id="@+id/report"
         android:text="Report an Incident"/>
 
+
+ <Button
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/colorAccent"
+    android:layout_below="@+id/report"
+    android:layout_marginTop="0dp"
+     android:layout_marginLeft="40dp"
+     android:layout_marginRight="40dp"
+    android:textColor="#fff"
+    android:id="@+id/verify"
+    android:text="Verify an Incident"/>
+
+
+
+
 </RelativeLayout>

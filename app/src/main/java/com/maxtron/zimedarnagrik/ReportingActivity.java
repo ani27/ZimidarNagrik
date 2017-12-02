@@ -48,9 +48,12 @@ public class ReportingActivity extends AppCompatActivity {
         des = (EditText)findViewById(R.id.des);
         progressBar = (ProgressBar)findViewById(R.id.progress);
         mainprogressBar = (ProgressBar)findViewById(R.id.mainprogress);
+
+        btnup = (Button)findViewById(R.id.upload);
+
         btnup.setBackgroundColor(getResources().getColor(R.color.grey));
         btnup.setEnabled(false);
-        clickpic();
+
 
         MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
             @Override
@@ -58,11 +61,14 @@ public class ReportingActivity extends AppCompatActivity {
 
                 lat = location.getLatitude();
                 lng = location.getLongitude();
+                Log.i("Location", lng+" "+lat);
                 mainprogressBar.setVisibility(View.GONE);
                 btnup.setEnabled(true);
                 btnup.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             }
         };
+
+        clickpic();
 
         MyLocation myLocation = new MyLocation();
         myLocation.getLocation(this, locationResult);//to get location

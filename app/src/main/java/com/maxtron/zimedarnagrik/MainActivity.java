@@ -19,13 +19,15 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button report;
+    Button report,verify;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().hide();
         report = (Button)findViewById(R.id.report);
+        verify = (Button)findViewById(R.id.verify);
 
         report.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,8 +40,51 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        verify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= 23){
+                    permissionFetchVerify();
+                }else {
+                    startActivity(new Intent(MainActivity.this, VerificationActivity.class));
+                }
+            }
+        });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void permissionFetchVerify() {
+
+        List<String> permissionsNeeded = new ArrayList<String>();
+
+        final List<String> permissionsList = new ArrayList<String>();
+        if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
+            permissionsNeeded.add("GPS");
+        if (!addPermission(permissionsList, Manifest.permission.ACCESS_COARSE_LOCATION))
+            permissionsNeeded.add("Coarse GPS");
+        if (!addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE))
+            permissionsNeeded.add("Read Storage");
+        if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            permissionsNeeded.add("Write Storage");
+        if (!addPermission(permissionsList, Manifest.permission.CAMERA))
+            permissionsNeeded.add("Camera");
+
+        if (permissionsList.size() > 0) {
+            if (permissionsNeeded.size() > 0) {
+                // Need Rationale
+
+                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]),
+                        REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+                return;
+            }
+
+            startActivity(new Intent(MainActivity.this, VerificationActivity.class));
+            //insertDummyContact();
+        }
+        startActivity(new Intent(MainActivity.this, VerificationActivity.class));
+        Log.i("Permission", "Here");
+    }
 
 
     final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
@@ -109,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                         && perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                         && perms.get(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
-                    startActivity(new Intent(MainActivity.this, ReportingActivity.class));
+                    //startActivity(new Intent(MainActivity.this, ReportingActivity.class));
                 } else {
                     // Permission Denied
                     Toast.makeText(MainActivity.this, "Some Permission is Denied", Toast.LENGTH_SHORT).show();

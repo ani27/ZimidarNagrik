@@ -1,6 +1,7 @@
 package com.maxtron.zimedarnagrik;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,7 @@ public class IncidentListAdapter extends RecyclerView.Adapter<IncidentListAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        Incidents incident = descriptionList.get(position);
+        final Incidents incident = descriptionList.get(position);
         holder.description.setText(incident.description);
         holder.distance.setText(incident.distance+" mtrs away");
         holder.timestamp.setText(incident.timestamp);
@@ -49,7 +50,10 @@ public class IncidentListAdapter extends RecyclerView.Adapter<IncidentListAdapte
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                Intent intent = new Intent(context, SingleVerificationActivity.class);
+                intent.putExtra("incident", incident);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
 
