@@ -1,5 +1,6 @@
 package com.maxtron.zimedarnagrik;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -25,6 +26,7 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 public class ReportingActivity extends AppCompatActivity {
 
@@ -35,7 +37,7 @@ public class ReportingActivity extends AppCompatActivity {
     Uri selectedImage;
     Bitmap photo;
     String ba1;
-    double lat,lng;
+    double lat=0,lng=0;
     EditText des;
     ProgressBar progressBar;
     @Override
@@ -71,13 +73,18 @@ public class ReportingActivity extends AppCompatActivity {
         // Check Camera
         if (getApplicationContext().getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_CAMERA)) {
-            // Open default camera
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            //intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-
-            // start the image capture Intent
-            startActivityForResult(intent, 100);
-
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                String fileName = "temp.jpg";
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.TITLE, fileName);
+                fileUri = getContentResolver()
+                        .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                                values);
+                takePictureIntent
+                        .putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                startActivityForResult(takePictureIntent, 100);
+            }
         } else {
             Toast.makeText(getApplication(), "Camera not supported", Toast.LENGTH_LONG).show();
         }
@@ -91,18 +98,23 @@ public class ReportingActivity extends AppCompatActivity {
 
             // Cursor to get image uri to display
 
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
+            if (fileUri != null) {
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(fileUri, filePathColumn, null, null, null);
+                cursor.moveToFirst();
 
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            picturePath = cursor.getString(columnIndex);
-            cursor.close();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                picturePath = cursor.getString(columnIndex);
+                cursor.close();
 
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            ImageView imageView = (ImageView) findViewById(R.id.imageclicked);
-            imageView.setImageBitmap(photo);
+                //Bitmap photo = (Bitmap) data.getExtras().get("data");
+                ImageView imageView = (ImageView) findViewById(R.id.imageclicked);
+                imageView.setImageBitmap(photo);
+            }else{
+                Log.i("Tag","selectedImage is null");
+            }
+        }else{
+            finish();
         }
     }
 
@@ -112,30 +124,36 @@ public class ReportingActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         btnup.setBackgroundColor(getResources().getColor(R.color.grey));
         btnup.setEnabled(false);
-        Log.e("path", "----------------" + picturePath);
-
-        // Image
-        Bitmap bm = BitmapFactory.decodeFile(picturePath);
-        ByteArrayOutputStream bao = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 90, bao);
-        byte[] ba = bao.toByteArray();
-        ba1 = Base64.encodeToString(ba, Base64.NO_WRAP);
-
-        Log.e("base64", "-----" + ba1);
-
-        // Upload image to server
 
 
-        JsonObject json = new JsonObject();
-        json.addProperty("imagebase64", ba1);
-        json.addProperty("latitude", lat);
-        json.addProperty("longitude", lng);
-        json.addProperty("description", des.getText().toString());
-        json.addProperty("timestamp", System.currentTimeMillis());
+//        Log.e("path", "----------------" + picturePath);
+//
+//        // Image
+//        Bitmap bm = BitmapFactory.decodeFile(picturePath);
+//        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+//        bm.compress(Bitmap.CompressFormat.JPEG, 90, bao);
+//        byte[] ba = bao.toByteArray();
+//        ba1 = Base64.encodeToString(ba, Base64.NO_WRAP);
+//
+//        Log.e("base64", "-----" + ba1);
+//
+//        // Upload image to server
+//
+//
+//        JsonObject json = new JsonObject();
+//        json.addProperty("lat", lat);
+//        json.addProperty("lng", lng);
+//        json.addProperty("description", des.getText().toString());
+
+
+        //json.addProperty("timestamp", System.currentTimeMillis());
 
         Ion.with(this)
-                .load("http://")
-                .setJsonObjectBody(json)
+                .load("http://14084439.ngrok.io/report/")
+                .setMultipartParameter("lat",lat+"")
+                .setMultipartParameter("lng",lng+"")
+                .setMultipartParameter("description",des.getText().toString())
+                .setMultipartFile("image","application/image",new File(picturePath))
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
