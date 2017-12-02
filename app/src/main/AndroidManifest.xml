@@ -24,9 +24,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ReportingActivity" />
-        <activity android:name=".VerificationActivity" />
-        <activity android:name=".SingleVerificationActivity"></activity>
+        <activity android:name=".ReportingActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".VerificationActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".SingleVerificationActivity"
+            android:parentActivityName=".VerificationActivity"></activity>
     </application>
 
 </manifest>

@@ -9,12 +9,12 @@ import android.os.Parcelable;
 
 public class Incidents implements Parcelable {
     public String description;
-    public double distance;
+    public String distance;
     public String imageurl;
     public String timestamp;
     int id;
 
-    public Incidents(String description, String imageurl, double distance, String timestamp, int id){
+    public Incidents(String description, String imageurl, String distance, String timestamp, int id){
         this.description = description;
         this.imageurl = imageurl;
         this.distance = distance;
@@ -24,7 +24,7 @@ public class Incidents implements Parcelable {
 
     protected Incidents(Parcel in) {
         description = in.readString();
-        distance = in.readDouble();
+        distance = in.readString();
         imageurl = in.readString();
         timestamp = in.readString();
         id = in.readInt();
@@ -50,7 +50,7 @@ public class Incidents implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(description);
-        parcel.writeDouble(distance);
+        parcel.writeString(distance);
         parcel.writeString(imageurl);
         parcel.writeString(timestamp);
         parcel.writeInt(id);

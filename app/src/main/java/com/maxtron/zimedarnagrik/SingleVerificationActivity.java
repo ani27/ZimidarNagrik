@@ -3,6 +3,7 @@ package com.maxtron.zimedarnagrik;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,12 +26,19 @@ public class SingleVerificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_single_verification);
+        getSupportActionBar().setTitle("Verify this Incident");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         incident = getIntent().getExtras().getParcelable("incident");
 
         description = (TextView)findViewById(R.id.des);
         crash = (ImageView) findViewById(R.id.imageclicked);
 
+        description.setText(incident.description);
+        Ion.with(crash)
+                .placeholder(R.drawable.overturnedcar2)
+                .error(R.drawable.overturnedcar2)
+                .load(incident.imageurl);
         yes = (Button)findViewById(R.id.yes);
         no = (Button)findViewById(R.id.No);
         notsuree = (Button)findViewById(R.id.NotSure);
@@ -74,6 +82,11 @@ public class SingleVerificationActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         // do stuff with the result or error
+                        try{
+                            Log.i("Result", result.toString());
+                        }catch (Exception e2){
+
+                        }
                         finish();
                         Toast.makeText(SingleVerificationActivity.this, "Thanks for verifying incident, We will soon get back to you", Toast.LENGTH_LONG).show();
 

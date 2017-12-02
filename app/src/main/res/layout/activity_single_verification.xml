@@ -18,13 +18,14 @@
             android:id="@+id/imageclicked"/>
 
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageclicked"
             android:layout_margin="20dp"
             android:id="@+id/des"
-            android:hint="Description of the Incident"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:gravity="start"/>
 
 
@@ -78,12 +79,7 @@
             android:layout_marginBottom="20dp"/>
 
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:id="@+id/mainprogress"
-            />
+
 
 
     </RelativeLayout>

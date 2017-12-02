@@ -45,6 +45,10 @@ public class ReportingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reporting);
+
+        getSupportActionBar().setTitle("Report Incident");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         des = (EditText)findViewById(R.id.des);
         progressBar = (ProgressBar)findViewById(R.id.progress);
         mainprogressBar = (ProgressBar)findViewById(R.id.mainprogress);
