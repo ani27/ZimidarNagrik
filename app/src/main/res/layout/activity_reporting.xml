@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context="com.maxtron.zimedarnagrik.ReportingActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="20dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/imageclicked"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@+id/imageclicked"
+            android:layout_margin="20dp"
+            android:id="@+id/des"
+            android:hint="Description of the Incident"
+            android:gravity="start"/>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/grey"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/des"
+            android:id="@+id/upload"
+            android:text="UPLOAD"
+            android:textColor="#fff"/>
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_below="@+id/upload"
+            android:id="@+id/progress"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:visibility="gone"
+            android:layout_marginBottom="20dp"/>
+
+
+    </RelativeLayout>
+</ScrollView>
