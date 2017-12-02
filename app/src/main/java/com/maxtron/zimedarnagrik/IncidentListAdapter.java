@@ -5,6 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 
@@ -15,11 +20,11 @@ import java.util.ArrayList;
 public class IncidentListAdapter extends RecyclerView.Adapter<IncidentListAdapter.MyViewHolder> {
 
     Context context;
-    ArrayList<String>description;
-    public IncidentListAdapter(Context context, ArrayList<String>des){
+    ArrayList<Incidents>descriptionList;
+    public IncidentListAdapter(Context context, ArrayList<Incidents>des){
 
         this.context = context;
-        this.description = des;
+        this.descriptionList = des;
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -32,16 +37,43 @@ public class IncidentListAdapter extends RecyclerView.Adapter<IncidentListAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
+        Incidents incident = descriptionList.get(position);
+        holder.description.setText(incident.description);
+        holder.distance.setText(incident.distance+" mtrs away");
+        holder.timestamp.setText(incident.timestamp);
+        Ion.with(holder.crash_image)
+                .placeholder(R.drawable.overturnedcar2)
+                .error(R.drawable.overturnedcar2)
+                .load(incident.imageurl);
+
+        holder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return descriptionList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView description;
+        TextView distance;
+        ImageView crash_image;
+        TextView timestamp;
+        RelativeLayout item;
+
         public MyViewHolder(View itemView) {
             super(itemView);
+            description = (TextView)itemView.findViewById(R.id.description);
+            distance = (TextView)itemView.findViewById(R.id.distance);
+            crash_image = (ImageView)itemView.findViewById(R.id.image);
+            timestamp  = (TextView)itemView.findViewById(R.id.time);
+            item = itemView.findViewById(R.id.list_item);
         }
     }
 }

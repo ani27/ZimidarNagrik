@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    tools:context="com.maxtron.zimedarnagrik.ReportingActivity">
+    tools:context="com.maxtron.zimedarnagrik.SingleVerificationActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,19 +37,43 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_below="@+id/des"
-            android:id="@+id/upload"
-            android:text="UPLOAD"
+            android:id="@+id/yes"
+            android:text="Yes"
             android:textColor="#fff"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/yes"
+            android:id="@+id/No"
+            android:text="No"
+            android:textColor="#fff"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/No"
+            android:id="@+id/NotSure"
+            android:text="Not Sure"
+            android:textColor="#fff"/>
         <ProgressBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_below="@+id/upload"
+            android:layout_below="@+id/NotSure"
             android:id="@+id/progress"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:indeterminate="true"
             android:layout_marginBottom="20dp"/>
 

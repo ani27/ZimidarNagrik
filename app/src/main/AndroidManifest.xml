@@ -25,7 +25,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ReportingActivity" />
-        <activity android:name=".VerificationActivity"></activity>
+        <activity android:name=".VerificationActivity" />
+        <activity android:name=".SingleVerificationActivity"></activity>
     </application>
 
 </manifest>

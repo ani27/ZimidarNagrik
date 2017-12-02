@@ -40,12 +40,16 @@ public class ReportingActivity extends AppCompatActivity {
     double lat=0,lng=0;
     EditText des;
     ProgressBar progressBar;
+    ProgressBar mainprogressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reporting);
         des = (EditText)findViewById(R.id.des);
         progressBar = (ProgressBar)findViewById(R.id.progress);
+        mainprogressBar = (ProgressBar)findViewById(R.id.mainprogress);
+        btnup.setBackgroundColor(getResources().getColor(R.color.grey));
+        btnup.setEnabled(false);
         clickpic();
 
         MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
@@ -54,6 +58,9 @@ public class ReportingActivity extends AppCompatActivity {
 
                 lat = location.getLatitude();
                 lng = location.getLongitude();
+                mainprogressBar.setVisibility(View.GONE);
+                btnup.setEnabled(true);
+                btnup.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             }
         };
 
