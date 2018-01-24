@@ -66,6 +66,18 @@
             android:id="@+id/NotSure"
             android:text="Not Sure"
             android:textColor="#fff"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/No"
+            android:id="@+id/NotSure"
+            android:text="Sure"
+            android:textColor="#fff"/>
         <ProgressBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
