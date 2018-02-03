@@ -54,6 +54,7 @@
             android:id="@+id/No"
             android:text="No"
             android:textColor="#fff"/>
+            
         <Button
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -66,6 +67,7 @@
             android:id="@+id/NotSure"
             android:text="Not Sure"
             android:textColor="#fff"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -77,7 +79,8 @@
             android:layout_below="@+id/No"
             android:id="@+id/NotSure"
             android:text="Sure"
-            android:textColor="#fff"/>
+            android:textColor="#000"/>
+
         <ProgressBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,11 +91,7 @@
             android:layout_marginRight="5dp"
             android:visibility="invisible"
             android:indeterminate="true"
-            android:layout_marginBottom="20dp"/>
-
-
-
-
+            android:layout_marginBottom="25dp"/>
 
     </RelativeLayout>
 </ScrollView>
